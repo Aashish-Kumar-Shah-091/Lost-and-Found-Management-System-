@@ -83,9 +83,12 @@ WSGI_APPLICATION = 'lostFound.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import dj_database_url
+import os
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get("postgresql://user:password@host:5432/Lost&found")
+        default=os.environ.get("DATABASE_URL")
     )
 }
 
