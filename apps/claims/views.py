@@ -4,7 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from apps.items.models import LostItem, FoundItem
 from .models import Claim
-from .utils import send_claim_email
 from apps.claims.utils.email_service import send_lost_found_email
 
 def claim_list(request):
