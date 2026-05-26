@@ -219,7 +219,8 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- CTA Section - only show to non-authenticated users -->
+{% if not user.is_authenticated %}
 <section class="py-20 relative" data-animate>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="glass-card rounded-3xl p-12 relative overflow-hidden">
@@ -238,4 +239,5 @@
         </div>
     </div>
 </section>
+{% endif %}
 {% endblock %}
