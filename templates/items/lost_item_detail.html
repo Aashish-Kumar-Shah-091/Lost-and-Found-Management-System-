@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ item.item_name }}</h2>
+<p>{{ item.description }}</p>
+<p>Location: {{ item.lost_location }}</p>
+<p>Date: {{ item.lost_date }}</p>
+{% if item.image %}
+  <img src="{{ item.image.url }}" class="img-fluid" />
+{% endif %}
+{% endblock %}

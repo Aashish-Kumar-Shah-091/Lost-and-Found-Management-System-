@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-from apps.items.models import item
-# Create your models here.
-class claim(models.Model):
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
+
+class Claim(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
-        ('Approved','Approved'),
-        ('Rejected','Rejected'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
     ]
 
     claimant = models.ForeignKey(
@@ -15,10 +16,10 @@ class claim(models.Model):
         on_delete=models.CASCADE
     )
 
-    item = models.ForeignKey(
-        item,
-        on_delete=models.CASCADE
-    )
+    # Generic relation to either LostItem or FoundItem
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    item = GenericForeignKey('content_type', 'object_id')
 
     proof = models.TextField()
 
@@ -28,8 +29,7 @@ class claim(models.Model):
         default='Pending'
     )
 
-    created_at= models.DateTimeField(
-        auto_now_add=True
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return f"{self.claimant.username} - {self.item.item_name}"
+        return f"{self.claimant.username} - {self.content_type} #{self.object_id}"

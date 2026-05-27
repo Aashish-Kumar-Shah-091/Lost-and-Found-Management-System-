@@ -2,12 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-class item(models.Model):
+class LostItem(models.Model):
 
     CATEGORY_CHOICES=[
-        ('Electronics', 'Electronices'),
+        ('Electronics', 'Electronics'),
         ('Documents', 'Documents'),
-        ('Accessoiries', 'Accessories'),
+        ('Accessories', 'Accessories'),
         ('Bags','Bags'),
         ('Others','Others')
     ]
@@ -49,9 +49,9 @@ class item(models.Model):
     
 class FoundItem(models.Model):
     CATEGORY_CHOICES=[
-        ('Electronics', 'Electronices'),
+        ('Electronics', 'Electronics'),
         ('Documents', 'Documents'),
-        ('Accessoiries', 'Accessories'),
+        ('Accessories', 'Accessories'),
         ('Bags','Bags'),
         ('Others','Others')
     ]
@@ -68,8 +68,6 @@ class FoundItem(models.Model):
     )   
 
     description = models.TextField()
-
-    found_location = models.TextField()
 
     found_location = models.CharField(max_length=200)
 

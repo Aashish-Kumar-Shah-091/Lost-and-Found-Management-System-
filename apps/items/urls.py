@@ -1,6 +1,45 @@
-from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # LOST ITEMS
+
+    path(
+        'lost/',
+        views.lost_item_list,
+        name='lost_item_list'
+    ),
+
+    path(
+        'lost/create/',
+        views.create_lost_item,
+        name='create_lost_item'
+    ),
+
+    path(
+        'lost/<int:pk>/',
+        views.lost_item_detail,
+        name='lost_item_detail'
+    ),
+
+    # FOUND ITEMS
+ 
+
+    path(
+        'found/',
+        views.found_item_list,
+        name='found_item_list'
+    ),
+
+    path(
+        'found/create/',
+        views.create_found_item,
+        name='create_found_item'
+    ),
+
+    path(
+        'found/<int:pk>/',
+        views.found_item_detail,
+        name='found_item_detail'
+    ),
 ]

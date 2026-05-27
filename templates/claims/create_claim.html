@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Create Claim</h2>
+<form method="post">{% csrf_token %}
+  <div class="mb-3"><label>Proof</label><textarea name="proof" class="form-control"></textarea></div>
+  <button class="btn btn-primary" type="submit">Submit Claim</button>
+</form>
+{% endblock %}
