@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from apps.items.models import LostItem, FoundItem
 from .models import Claim
 from .utils import send_claim_email
-
+from apps.claims.utils.email_service import send_lost_found_email
 
 def claim_list(request):
     claims = Claim.objects.all().order_by('-created_at')
@@ -54,3 +54,19 @@ Please review it in the dashboard.
 def claim_detail(request, pk):
     claim = get_object_or_404(Claim, id=pk)
     return render(request, 'claims/claim_detail.html', {'claim': claim})
+
+
+
+#for the resend API
+def check_match(lost_item, found_item):
+    # simple example logic
+    if lost_item.item_name.lower() == found_item.item_name.lower():
+
+        send_lost_found_email(
+            lost_item.user.email,
+            lost_item.item_name
+        )
+
+        return True
+
+    return False
