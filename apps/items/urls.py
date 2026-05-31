@@ -2,8 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # LOST ITEMS
-
     path(
         'lost/',
         views.lost_item_list,
@@ -21,9 +19,6 @@ urlpatterns = [
         views.lost_item_detail,
         name='lost_item_detail'
     ),
-
-    # FOUND ITEMS
- 
 
     path(
         'found/',

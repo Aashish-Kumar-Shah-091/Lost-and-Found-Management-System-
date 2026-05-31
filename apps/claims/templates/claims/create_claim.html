@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Submit Claim — Lost & Found{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white">Submit a Claim</h1>
+            <p class="text-muted text-sm mt-2">Claiming: <span class="text-white font-medium">{{ item.item_name }}</span></p>
+        </div>
+
+        <!-- Item Preview -->
+        <div class="glass-card rounded-2xl p-5 mb-6 flex items-center space-x-4">
+            <div class="w-16 h-16 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="w-16 h-16 object-cover rounded-xl">
+                {% else %}
+                    <svg class="w-8 h-8 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                {% endif %}
+            </div>
+            <div>
+                <p class="text-white font-medium">{{ item.item_name }}</p>
+                <p class="text-xs text-muted">{{ item.category }} &middot; {{ kind|title }} Item</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="glass-card rounded-2xl p-8">
+            <form method="POST" class="space-y-6">
+                {% csrf_token %}
+
+                <div>
+                    <label for="proof" class="block text-sm font-medium text-muted mb-2">Proof of Ownership</label>
+                    <textarea name="proof" id="proof" rows="6" required
+                              class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm placeholder-dark-600 resize-none"
+                              placeholder="Describe how you can prove this item belongs to you. Include details like where you got it, unique marks, serial numbers, etc."></textarea>
+                    <p class="text-xs text-dark-600 mt-2">Be as specific as possible to verify your claim.</p>
+                </div>
+
+                <div class="flex gap-4 pt-2">
+                    <a href="javascript:history.back()" class="btn-secondary flex-1 py-3 rounded-xl text-sm font-medium text-white text-center">Cancel</a>
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-white">Submit Claim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

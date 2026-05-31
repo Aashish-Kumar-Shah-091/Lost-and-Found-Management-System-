@@ -1,0 +1,43 @@
+{% extends 'modern_base.html' %}
+{% block title %}Lost Items — LostFound{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h4">Lost Items</h2>
+    <form class="d-flex search-bar" method="get">
+      <input name="q" class="form-control form-control-sm" placeholder="Search lost items">
+      <button class="btn btn-sm btn-primary ms-2">Search</button>
+    </form>
+  </div>
+
+  <div class="row g-3">
+    {% for item in object_list %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card item-card card-3d p-0">
+        <div class="row g-0">
+          <div class="col-4">
+            <img src="{% if item.image %}{{ item.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="img-fluid rounded-start" alt="{{ item.item_name }}">
+          </div>
+          <div class="col-8">
+            <div class="card-body">
+              <h5 class="card-title mb-1">{{ item.item_name }}</h5>
+              <p class="small text-muted mb-1">{{ item.lost_location }} • {{ item.lost_date|date:'M d' }}</p>
+              <a href="{% url 'lost_item_detail' item.id %}" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="card p-5 text-center glass-sm">
+        <h5 class="mb-2">No lost items found</h5>
+        <p class="text-muted">Try broadening your search or report a lost item.</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-4">{% if is_paginated %}{% include 'pagination.html' %}{% endif %}</div>
+</div>
+{% endblock %}

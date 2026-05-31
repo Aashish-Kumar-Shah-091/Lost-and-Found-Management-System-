@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — Lost & Found{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex gap-8">
+            {% include 'partials/sidebar.html' %}
+
+            <div class="flex-1 space-y-6">
+                <!-- Welcome Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Welcome back, {{ user.username }}</h1>
+                        <p class="text-muted text-sm mt-1">Here's an overview of your activity</p>
+                    </div>
+                    <div class="flex gap-3 mt-4 sm:mt-0">
+                        <a href="{% url 'create_lost_item' %}" class="btn-primary px-4 py-2 rounded-xl text-xs font-medium text-white inline-flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Report Lost</span>
+                        </a>
+                        <a href="{% url 'create_found_item' %}" class="btn-secondary px-4 py-2 rounded-xl text-xs font-medium text-white inline-flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Report Found</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card rounded-xl p-5 card-hover">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-white">{{ user_lost_count }}</p>
+                        <p class="text-xs text-muted mt-1">Lost Reports</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 card-hover">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-white">{{ user_found_count }}</p>
+                        <p class="text-xs text-muted mt-1">Found Reports</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 card-hover">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-white">{{ matches_count }}</p>
+                        <p class="text-xs text-muted mt-1">Matches</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 card-hover">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-white">{{ notifications_count }}</p>
+                        <p class="text-xs text-muted mt-1">Pending Claims</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Grid -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <!-- Recent Lost Reports -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-sm font-semibold text-white">Recent Lost Reports</h2>
+                            <a href="{% url 'lost_item_list' %}" class="text-xs text-primary hover:text-secondary transition-colors">View all</a>
+                        </div>
+                        {% if recent_lost %}
+                        <div class="space-y-3">
+                            {% for item in recent_lost %}
+                            <a href="{% url 'lost_item_detail' item.pk %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-dark-700/50 transition-colors block">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" class="w-10 h-10 rounded-lg object-cover">
+                                    {% else %}
+                                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-white truncate">{{ item.item_name }}</p>
+                                    <p class="text-xs text-muted">{{ item.lost_location }}</p>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded-full
+                                    {% if item.status == 'Lost' %}bg-red-500/10 text-red-400{% else %}bg-success/10 text-success{% endif %}">
+                                    {{ item.status }}
+                                </span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="text-center py-8">
+                            <p class="text-muted text-sm">No lost reports yet</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Recent Found Reports -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-sm font-semibold text-white">Recent Found Reports</h2>
+                            <a href="{% url 'found_item_list' %}" class="text-xs text-primary hover:text-secondary transition-colors">View all</a>
+                        </div>
+                        {% if recent_found %}
+                        <div class="space-y-3">
+                            {% for item in recent_found %}
+                            <a href="{% url 'found_item_detail' item.pk %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-dark-700/50 transition-colors block">
+                                <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center flex-shrink-0">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" class="w-10 h-10 rounded-lg object-cover">
+                                    {% else %}
+                                        <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-white truncate">{{ item.item_name }}</p>
+                                    <p class="text-xs text-muted">{{ item.found_location }}</p>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded-full
+                                    {% if item.status == 'Found' %}bg-success/10 text-success{% else %}bg-accent/10 text-accent{% endif %}">
+                                    {{ item.status }}
+                                </span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="text-center py-8">
+                            <p class="text-muted text-sm">No found reports yet</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Recent Claims -->
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-sm font-semibold text-white">Your Claims</h2>
+                        <a href="{% url 'claim_list' %}" class="text-xs text-primary hover:text-secondary transition-colors">View all</a>
+                    </div>
+                    {% if recent_claims %}
+                    <div class="space-y-3">
+                        {% for claim in recent_claims %}
+                        <a href="{% url 'claim_detail' claim.pk %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-dark-700/50 transition-colors block">
+                            <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm text-white truncate">Claim #{{ claim.pk }}</p>
+                                <p class="text-xs text-muted">{{ claim.created_at|date:"M d, Y" }}</p>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded-full
+                                {% if claim.status == 'Pending' %}bg-yellow-500/10 text-yellow-400
+                                {% elif claim.status == 'Approved' %}bg-success/10 text-success
+                                {% else %}bg-red-500/10 text-red-400{% endif %}">
+                                {{ claim.status }}
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8">
+                        <p class="text-muted text-sm">No claims yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

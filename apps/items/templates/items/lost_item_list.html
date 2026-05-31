@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Lost Items — Lost & Found{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-white">Lost Items</h1>
+                <p class="text-muted text-sm mt-1">Browse all reported lost items</p>
+            </div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'create_lost_item' %}" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-medium text-white mt-4 sm:mt-0 inline-flex items-center space-x-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Report Lost Item</span>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="glass-card rounded-2xl p-4 mb-8" x-data="{ category: '' }">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" placeholder="Search lost items..." class="input-dark w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-dark-600"
+                           x-data x-on:input.debounce.300ms="$dispatch('search', { query: $el.value })">
+                </div>
+                <select class="input-dark px-4 py-2.5 rounded-xl text-sm text-muted appearance-none cursor-pointer" x-model="category">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Documents">Documents</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Items Grid -->
+        {% if items %}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for item in items %}
+            <a href="{% url 'lost_item_detail' item.pk %}" class="glass-card rounded-2xl overflow-hidden card-hover group block">
+                <!-- Image -->
+                <div class="h-48 bg-dark-800 relative overflow-hidden">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.item_name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-dark-800 to-dark-700">
+                            <svg class="w-12 h-12 text-dark-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                    {% endif %}
+                    <div class="absolute top-3 right-3">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-medium
+                            {% if item.status == 'Lost' %}bg-red-500/20 text-red-400{% elif item.status == 'Recovered' %}bg-success/20 text-success{% else %}bg-primary/20 text-primary{% endif %}">
+                            {{ item.status }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-5">
+                    <h3 class="text-white font-semibold truncate group-hover:text-primary transition-colors">{{ item.item_name }}</h3>
+                    <div class="mt-3 space-y-2">
+                        <div class="flex items-center space-x-2 text-xs text-muted">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                            <span>{{ item.category }}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs text-muted">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <span class="truncate">{{ item.lost_location }}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs text-muted">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <span>{{ item.lost_date|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-dark-700 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[10px] font-bold">
+                                {{ item.user.username|make_list|first|upper }}
+                            </div>
+                            <span class="text-xs text-muted">{{ item.user.username }}</span>
+                        </div>
+                        <span class="text-xs text-muted">{{ item.created_at|timesince }} ago</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="glass-card rounded-2xl p-12 text-center">
+            <svg class="w-16 h-16 mx-auto text-dark-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <h3 class="text-lg font-semibold text-white mb-2">No lost items reported yet</h3>
+            <p class="text-muted text-sm mb-6">Be the first to report a lost item.</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'create_lost_item' %}" class="btn-primary px-6 py-3 rounded-xl text-sm font-medium text-white inline-flex items-center space-x-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Report Lost Item</span>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

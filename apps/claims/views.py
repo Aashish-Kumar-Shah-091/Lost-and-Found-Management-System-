@@ -5,7 +5,6 @@ from apps.items.models import LostItem, FoundItem
 from .models import Claim
 
 
-# Create your views here.
 def claim_list(request):
     claims = Claim.objects.all().order_by('-created_at')
     return render(request, 'claims/claim_list.html', {'claims': claims})

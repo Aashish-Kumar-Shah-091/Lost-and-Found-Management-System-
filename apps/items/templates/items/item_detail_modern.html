@@ -1,0 +1,41 @@
+{% extends 'modern_base.html' %}
+{% block title %}{{ object.item_name }} — LostFound{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card rounded-3xl card-raise overflow-hidden">
+        <img src="{% if object.image %}{{ object.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="img-fluid" alt="{{ object.item_name }}">
+      </div>
+    </div>
+        <div class="col-lg-5">
+          <h2 class="fw-bold">{{ object.item_name }}</h2>
+          <div class="mb-3">
+            <span class="badge" style="background:var(--primary);color:white;border-radius:12px;padding:.45rem .65rem">{{ object.category }}</span>
+            <small class="text-muted ms-2">{{ object.lost_location|default:object.found_location }} • {{ object.lost_date|default:object.created_at|date:'M d, Y' }}</small>
+          </div>
+          <p class="text-muted">{{ object.description }}</p>
+
+      <div class="d-flex gap-2 mt-4">
+        <a href="/claims/new/?item={{ object.id }}" class="btn btn-primary">Claim Item</a>
+        <a href="/items/" class="btn btn-outline-secondary">Back to listings</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5">
+  <h5>Similar Items</h5>
+  <div class="row g-3 mt-2">
+    {% for sim in similar_items %}
+    <div class="col-md-3">
+      <div class="card item-card">
+        <img src="{% if sim.image %}{{ sim.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="card-img-top" alt="{{ sim.item_name }}">
+        <div class="card-body p-2">
+          <small class="d-block">{{ sim.item_name }}</small>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
