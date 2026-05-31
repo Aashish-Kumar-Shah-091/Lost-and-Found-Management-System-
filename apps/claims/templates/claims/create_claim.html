@@ -7,8 +7,8 @@
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-white">Submit a Claim</h1>
-            <p class="text-muted text-sm mt-2">Claiming: <span class="text-white font-medium">{{ item.item_name }}</span></p>
+            <h1 class="text-3xl font-bold text-gray-900">Submit a Claim</h1>
+            <p class="text-muted text-sm mt-2">Claiming: <span class="text-gray-900 font-medium">{{ item.item_name }}</span></p>
         </div>
 
         <!-- Item Preview -->
@@ -21,7 +21,7 @@
                 {% endif %}
             </div>
             <div>
-                <p class="text-white font-medium">{{ item.item_name }}</p>
+                <p class="text-gray-900 font-medium">{{ item.item_name }}</p>
                 <p class="text-xs text-muted">{{ item.category }} &middot; {{ kind|title }} Item</p>
             </div>
         </div>
@@ -34,14 +34,14 @@
                 <div>
                     <label for="proof" class="block text-sm font-medium text-muted mb-2">Proof of Ownership</label>
                     <textarea name="proof" id="proof" rows="6" required
-                              class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm placeholder-dark-600 resize-none"
+                              class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm placeholder-dark-600 resize-none"
                               placeholder="Describe how you can prove this item belongs to you. Include details like where you got it, unique marks, serial numbers, etc."></textarea>
                     <p class="text-xs text-dark-600 mt-2">Be as specific as possible to verify your claim.</p>
                 </div>
 
                 <div class="flex gap-4 pt-2">
-                    <a href="javascript:history.back()" class="btn-secondary flex-1 py-3 rounded-xl text-sm font-medium text-white text-center">Cancel</a>
-                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-white">Submit Claim</button>
+                    <a href="javascript:history.back()" class="btn-secondary flex-1 py-3 rounded-xl text-sm font-medium text-gray-900 text-center">Cancel</a>
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-gray-900">Submit Claim</button>
                 </div>
             </form>
         </div>

@@ -7,7 +7,7 @@
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-white">Report Found Item</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Report Found Item</h1>
             <p class="text-muted text-sm mt-2">Help reunite this item with its owner</p>
         </div>
 
@@ -19,13 +19,13 @@
                 <div>
                     <label for="item_name" class="block text-sm font-medium text-muted mb-2">Item Name</label>
                     <input type="text" name="item_name" id="item_name" required
-                           class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm placeholder-dark-600"
+                           class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm placeholder-dark-600"
                            placeholder="e.g., Blue Backpack">
                 </div>
 
                 <div>
                     <label for="category" class="block text-sm font-medium text-muted mb-2">Category</label>
-                    <select name="category" id="category" required class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm appearance-none cursor-pointer">
+                    <select name="category" id="category" required class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm appearance-none cursor-pointer">
                         <option value="" class="bg-dark-800">Select a category</option>
                         <option value="Electronics" class="bg-dark-800">Electronics</option>
                         <option value="Documents" class="bg-dark-800">Documents</option>
@@ -38,21 +38,21 @@
                 <div>
                     <label for="description" class="block text-sm font-medium text-muted mb-2">Description</label>
                     <textarea name="description" id="description" rows="4" required
-                              class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm placeholder-dark-600 resize-none"
+                              class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm placeholder-dark-600 resize-none"
                               placeholder="Describe the item in detail (color, brand, condition...)"></textarea>
                 </div>
 
                 <div>
                     <label for="found_location" class="block text-sm font-medium text-muted mb-2">Location Found</label>
                     <input type="text" name="found_location" id="found_location" required
-                           class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm placeholder-dark-600"
+                           class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm placeholder-dark-600"
                            placeholder="e.g., Library, 2nd floor">
                 </div>
 
                 <div>
                     <label for="found_date" class="block text-sm font-medium text-muted mb-2">Date Found</label>
                     <input type="date" name="found_date" id="found_date" required
-                           class="input-dark w-full px-4 py-3 rounded-xl text-white text-sm">
+                           class="input-dark w-full px-4 py-3 rounded-xl text-gray-900 text-sm">
                 </div>
 
                 <!-- Image Upload -->
@@ -74,15 +74,15 @@
                             <img :src="preview" class="max-h-48 mx-auto rounded-lg">
                             <button type="button" @click.stop="preview = null; $refs.fileInput.value = ''"
                                     class="absolute top-2 right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                <svg class="w-3 h-3 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex gap-4 pt-2">
-                    <a href="{% url 'found_item_list' %}" class="btn-secondary flex-1 py-3 rounded-xl text-sm font-medium text-white text-center">Cancel</a>
-                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-white">Submit Report</button>
+                    <a href="{% url 'found_item_list' %}" class="btn-secondary flex-1 py-3 rounded-xl text-sm font-medium text-gray-900 text-center">Cancel</a>
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-gray-900">Submit Report</button>
                 </div>
             </form>
         </div>

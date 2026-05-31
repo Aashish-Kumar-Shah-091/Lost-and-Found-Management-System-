@@ -7,9 +7,9 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Breadcrumb -->
         <nav class="flex items-center space-x-2 text-sm text-muted mb-6">
-            <a href="{% url 'found_item_list' %}" class="hover:text-white transition-colors">Found Items</a>
+            <a href="{% url 'found_item_list' %}" class="hover:text-gray-900 transition-colors">Found Items</a>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-white">{{ item.item_name }}</span>
+            <span class="text-gray-900">{{ item.item_name }}</span>
         </nav>
 
         <div class="grid lg:grid-cols-5 gap-8">
@@ -28,7 +28,7 @@
 
                 <!-- Description -->
                 <div class="glass-card rounded-2xl p-6">
-                    <h2 class="text-lg font-semibold text-white mb-3">Description</h2>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-3">Description</h2>
                     <p class="text-muted text-sm leading-relaxed">{{ item.description }}</p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <!-- Item Info Card -->
                 <div class="glass-card rounded-2xl p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h1 class="text-xl font-bold text-white">{{ item.item_name }}</h1>
+                        <h1 class="text-xl font-bold text-gray-900">{{ item.item_name }}</h1>
                         <span class="px-3 py-1 rounded-full text-xs font-medium
                             {% if item.status == 'Found' %}bg-success/20 text-success{% elif item.status == 'Returned' %}bg-accent/20 text-accent{% else %}bg-primary/20 text-primary{% endif %}">
                             {{ item.status }}
@@ -52,7 +52,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-muted">Category</p>
-                                <p class="text-sm text-white font-medium">{{ item.category }}</p>
+                                <p class="text-sm text-gray-900 font-medium">{{ item.category }}</p>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-muted">Location Found</p>
-                                <p class="text-sm text-white font-medium">{{ item.found_location }}</p>
+                                <p class="text-sm text-gray-900 font-medium">{{ item.found_location }}</p>
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-muted">Reported</p>
-                                <p class="text-sm text-white font-medium">{{ item.created_at|date:"F d, Y" }}</p>
+                                <p class="text-sm text-gray-900 font-medium">{{ item.created_at|date:"F d, Y" }}</p>
                             </div>
                         </div>
                     </div>
@@ -80,13 +80,13 @@
 
                 <!-- Reporter -->
                 <div class="glass-card rounded-2xl p-6">
-                    <h3 class="text-sm font-semibold text-white mb-3">Found By</h3>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-3">Found By</h3>
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-sm font-bold text-white">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-sm font-bold text-gray-900">
                             {{ item.user.username|make_list|first|upper }}
                         </div>
                         <div>
-                            <p class="text-sm text-white font-medium">{{ item.user.username }}</p>
+                            <p class="text-sm text-gray-900 font-medium">{{ item.user.username }}</p>
                             <p class="text-xs text-muted">{{ item.created_at|timesince }} ago</p>
                         </div>
                     </div>
@@ -94,13 +94,13 @@
 
                 <!-- Claim Button -->
                 {% if user.is_authenticated and user != item.user %}
-                <a href="{% url 'create_claim' 'found' item.pk %}" class="btn-primary w-full py-3 rounded-xl text-sm font-medium text-white text-center block">
+                <a href="{% url 'create_claim' 'found' item.pk %}" class="btn-primary w-full py-3 rounded-xl text-sm font-medium text-gray-900 text-center block">
                     This Is My Item
                 </a>
                 {% endif %}
 
                 <!-- Back Button -->
-                <a href="{% url 'found_item_list' %}" class="btn-secondary w-full py-3 rounded-xl text-sm font-medium text-white text-center block">
+                <a href="{% url 'found_item_list' %}" class="btn-secondary w-full py-3 rounded-xl text-sm font-medium text-gray-900 text-center block">
                     Back to Found Items
                 </a>
             </div>

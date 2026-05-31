@@ -8,11 +8,11 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-white">Lost Items</h1>
+                <h1 class="text-3xl font-bold text-gray-900">Lost Items</h1>
                 <p class="text-muted text-sm mt-1">Browse all reported lost items</p>
             </div>
             {% if user.is_authenticated %}
-            <a href="{% url 'create_lost_item' %}" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-medium text-white mt-4 sm:mt-0 inline-flex items-center space-x-2">
+            <a href="{% url 'create_lost_item' %}" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-medium text-gray-900 mt-4 sm:mt-0 inline-flex items-center space-x-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Report Lost Item</span>
             </a>
@@ -24,7 +24,7 @@
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="flex-1 relative">
                     <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <input type="text" placeholder="Search lost items..." class="input-dark w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-dark-600"
+                    <input type="text" placeholder="Search lost items..." class="input-dark w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-gray-900 placeholder-dark-600"
                            x-data x-on:input.debounce.300ms="$dispatch('search', { query: $el.value })">
                 </div>
                 <select class="input-dark px-4 py-2.5 rounded-xl text-sm text-muted appearance-none cursor-pointer" x-model="category">
@@ -62,7 +62,7 @@
 
                 <!-- Content -->
                 <div class="p-5">
-                    <h3 class="text-white font-semibold truncate group-hover:text-primary transition-colors">{{ item.item_name }}</h3>
+                    <h3 class="text-gray-900 font-semibold truncate group-hover:text-primary transition-colors">{{ item.item_name }}</h3>
                     <div class="mt-3 space-y-2">
                         <div class="flex items-center space-x-2 text-xs text-muted">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
@@ -93,10 +93,10 @@
         {% else %}
         <div class="glass-card rounded-2xl p-12 text-center">
             <svg class="w-16 h-16 mx-auto text-dark-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <h3 class="text-lg font-semibold text-white mb-2">No lost items reported yet</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">No lost items reported yet</h3>
             <p class="text-muted text-sm mb-6">Be the first to report a lost item.</p>
             {% if user.is_authenticated %}
-            <a href="{% url 'create_lost_item' %}" class="btn-primary px-6 py-3 rounded-xl text-sm font-medium text-white inline-flex items-center space-x-2">
+            <a href="{% url 'create_lost_item' %}" class="btn-primary px-6 py-3 rounded-xl text-sm font-medium text-gray-900 inline-flex items-center space-x-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Report Lost Item</span>
             </a>
