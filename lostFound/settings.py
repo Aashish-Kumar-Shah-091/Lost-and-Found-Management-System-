@@ -142,7 +142,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Resend email API
-RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+RESEND_API_KEY = os.environ.get('re_g4puWpY5_ipiNxGMhv5xzS3g6XayeEcvj', '')
 
 # Cloudinary configuration
 import cloudinary
