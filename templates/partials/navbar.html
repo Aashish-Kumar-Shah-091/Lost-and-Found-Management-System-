@@ -1,9 +1,10 @@
+{% load static %}
 <nav class="glass fixed top-0 left-0 right-0 z-50" x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center space-x-2">
                 <a href="{% url 'home' %}" class="flex items-center space-x-2">
-                    <img src="/static/modern/img/logo.png" alt="LostFound logo" style="height: 48px; width: auto; display:block; object-fit: contain;" />
+                    <img src="{% static 'modern/img/logo.png' %}" alt="LostFound logo" style="height: 48px; width: auto; display:block; object-fit: contain;" />
                 </a>
             </div>
 

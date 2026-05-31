@@ -6,6 +6,7 @@ from apps.items.models import LostItem, FoundItem
 from .models import Claim
 from apps.claims.utils.email_service import send_lost_found_email
 
+
 def claim_list(request):
     claims = Claim.objects.all().order_by('-created_at')
     return render(request, 'claims/claim_list.html', {'claims': claims})
@@ -28,19 +29,8 @@ def create_claim(request, kind, item_id):
             proof=proof,
         )
 
-        #  EMAIL TO ITEM OWNER
-        send_claim_email(
-            "New Claim Submitted",
-            f"""
-A new claim has been submitted.
-
-Item: {item}
-Claimant: {request.user.username}
-
-Please review it in the dashboard.
-""",
-            [item.user.email]
-        )
+        if item.user.email:
+            send_lost_found_email(item.user.email, item.item_name)
 
         return redirect('claim_list')
 
@@ -55,17 +45,11 @@ def claim_detail(request, pk):
     return render(request, 'claims/claim_detail.html', {'claim': claim})
 
 
-
-#for the resend API
 def check_match(lost_item, found_item):
-    # simple example logic
     if lost_item.item_name.lower() == found_item.item_name.lower():
-
         send_lost_found_email(
             lost_item.user.email,
             lost_item.item_name
         )
-
         return True
-
     return False

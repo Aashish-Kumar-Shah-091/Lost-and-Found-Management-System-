@@ -1,4 +1,5 @@
 {% extends 'modern_base.html' %}
+{% load static %}
 
 {% block title %}Reconnect People With Their Belongings — LostFound{% endblock %}
 
@@ -35,7 +36,7 @@
 
     <div class="col-lg-6">
       <div class="three-hero-wrap">
-        <img src="/static/modern/img/hero.png" alt="Hero illustration" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">
+        <img src="{% static 'modern/img/hero.png' %}" alt="Hero illustration" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">
       </div>
     </div>
   </div>
@@ -52,7 +53,7 @@
     {% for item in recent_lost_items %}
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="card item-card card-raise h-100">
-        <img src="{% if item.image %}{{ item.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="card-img-top" alt="{{ item.item_name }}">
+        <img src="{% if item.image %}{{ item.image.url }}{% else %}{% static 'modern/img/placeholder-item.svg' %}{% endif %}" class="card-img-top" alt="{{ item.item_name }}">
         <div class="card-body">
           <h5 class="card-title">{{ item.item_name }}</h5>
           <p class="card-text text-muted small mb-1"><i class="bi bi-geo-alt"></i> {{ item.lost_location }}</p>
@@ -84,7 +85,7 @@
     {% for item in recent_found_items %}
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="card item-card card-raise h-100">
-        <img src="{% if item.image %}{{ item.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="card-img-top" alt="{{ item.item_name }}">
+        <img src="{% if item.image %}{{ item.image.url }}{% else %}{% static 'modern/img/placeholder-item.svg' %}{% endif %}" class="card-img-top" alt="{{ item.item_name }}">
         <div class="card-body">
           <h5 class="card-title">{{ item.item_name }}</h5>
           <p class="card-text text-muted small mb-1">{{ item.found_location }}</p>

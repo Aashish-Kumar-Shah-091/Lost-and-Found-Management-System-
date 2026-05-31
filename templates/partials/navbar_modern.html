@@ -1,7 +1,8 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" aria-label="Main navigation">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="/static/modern/img/logo.png" alt="LostFound logo" style="height: 56px; width: auto; display:block; object-fit: contain;" />
+      <img src="{% static 'modern/img/logo.png' %}" alt="LostFound logo" style="height: 56px; width: auto; display:block; object-fit: contain;" />
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">

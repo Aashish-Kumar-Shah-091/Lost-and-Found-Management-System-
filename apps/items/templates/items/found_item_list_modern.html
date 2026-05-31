@@ -1,4 +1,5 @@
 {% extends 'modern_base.html' %}
+{% load static %}
 {% block title %}Found Items — LostFound{% endblock %}
 {% block content %}
 <div class="container">
@@ -16,7 +17,7 @@
       <div class="card item-card card-3d p-0">
         <div class="row g-0">
           <div class="col-4">
-            <img src="{% if item.image %}{{ item.image.url }}{% else %}/static/modern/img/placeholder-item.svg{% endif %}" class="img-fluid rounded-start" alt="{{ item.item_name }}">
+            <img src="{% if item.image %}{{ item.image.url }}{% else %}{% static 'modern/img/placeholder-item.svg' %}{% endif %}" class="img-fluid rounded-start" alt="{{ item.item_name }}">
           </div>
           <div class="col-8">
             <div class="card-body">
