@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 
 from apps.items.models import LostItem, FoundItem
 from .models import Claim
@@ -22,7 +23,7 @@ def create_claim(request, kind, item_id):
 
         ct = ContentType.objects.get_for_model(model)
 
-        claim = Claim.objects.create(
+        Claim.objects.create(
             claimant=request.user,
             content_type=ct,
             object_id=item.id,
@@ -32,6 +33,7 @@ def create_claim(request, kind, item_id):
         if item.user.email:
             send_lost_found_email(item.user.email, item.item_name)
 
+        messages.success(request, 'Your claim has been submitted successfully!')
         return redirect('claim_list')
 
     return render(request, 'claims/create_claim.html', {
@@ -43,13 +45,3 @@ def create_claim(request, kind, item_id):
 def claim_detail(request, pk):
     claim = get_object_or_404(Claim, id=pk)
     return render(request, 'claims/claim_detail.html', {'claim': claim})
-
-
-def check_match(lost_item, found_item):
-    if lost_item.item_name.lower() == found_item.item_name.lower():
-        send_lost_found_email(
-            lost_item.user.email,
-            lost_item.item_name
-        )
-        return True
-    return False

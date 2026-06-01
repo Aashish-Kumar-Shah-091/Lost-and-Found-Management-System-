@@ -12,4 +12,4 @@ def home(request):
         'recent_lost_items': LostItem.objects.all().order_by('-created_at')[:8],
         'recent_found_items': FoundItem.objects.all().order_by('-created_at')[:8],
     }
-    return render(request, 'core/home_modern.html', context)
+    return render(request, 'core/home.html', context)

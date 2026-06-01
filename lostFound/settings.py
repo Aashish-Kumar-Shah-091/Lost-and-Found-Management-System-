@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-8%$ni_dp49u($al=p3)r2#9z&6j&eni*0bg_y5!034#*51#_1$')
 
-DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
@@ -142,7 +142,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Resend email API
-RESEND_API_KEY = os.environ.get('re_g4puWpY5_ipiNxGMhv5xzS3g6XayeEcvj', '')
+RESEND_API_KEY = os.environ.get('re_T6fnGNfc_HvsdH2ojtfQ3iWTz4196E7VS', '')
 
 # Cloudinary configuration
 import cloudinary
@@ -155,4 +155,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('gMImWB_gcj9RGFPFq3VuqJWO-io', ''),
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Use Cloudinary for media storage only when configured
+if CLOUDINARY_STORAGE['CLOUD_NAME']:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

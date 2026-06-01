@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from apps.items.models import LostItem, FoundItem
 from apps.claims.models import Claim
 from .forms import RegisterForm
@@ -14,6 +15,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, 'Account created successfully! Welcome to Lost & Found.')
             return redirect('home')
 
     else:
@@ -36,6 +38,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, f'Welcome back, {user.username}!')
             return redirect('dashboard')
 
     else:
@@ -50,6 +53,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
 
 
