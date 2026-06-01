@@ -32,4 +32,7 @@ def send_lost_found_email(to_email, item_name):
         "html": html_content,
     }
 
-    return resend.Emails.send(params)
+    try:
+        return resend.Emails.send(params)
+    except Exception:
+        return None
