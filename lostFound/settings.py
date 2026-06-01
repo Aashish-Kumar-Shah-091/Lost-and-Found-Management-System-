@@ -133,7 +133,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -142,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Resend email API
-RESEND_API_KEY = os.environ.get('re_T6fnGNfc_HvsdH2ojtfQ3iWTz4196E7VS', '')
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', 're_T6fnGNfc_HvsdH2ojtfQ3iWTz4196E7VS')
 
 # Cloudinary configuration
 import cloudinary
@@ -150,11 +149,24 @@ import cloudinary.uploader
 import cloudinary.api
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('Root', ''),
-    'API_KEY': os.environ.get('642252122754475', ''),
-    'API_SECRET': os.environ.get('gMImWB_gcj9RGFPFq3VuqJWO-io', ''),
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dbekyt3g2'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '642252122754475'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'gMImWB_gcj9RGFPFq3VuqJWO-io'),
 }
 
-# Use Cloudinary for media storage only when configured
+# Storage configuration
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# Use Cloudinary for media storage when configured
 if CLOUDINARY_STORAGE['CLOUD_NAME']:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    STORAGES["default"] = {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    }
+else:
+    STORAGES["default"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    }
