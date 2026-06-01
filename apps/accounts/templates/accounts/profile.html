@@ -20,7 +20,7 @@
                         </div>
                         <div class="text-center sm:text-left">
                             <h1 class="text-2xl font-bold text-gray-900">{{ user.get_full_name|default:user.username }}</h1>
-                            <p class="text-muted text-sm">{{ user.email }}</p>
+                            <p class="text-black text-sm">{{ user.email }}</p>
                             <p class="text-xs text-dark-600 mt-1">Member since {{ user.date_joined|date:"F Y" }}</p>
                         </div>
                     </div>
@@ -30,15 +30,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="glass-card rounded-xl p-5 text-center">
                         <p class="text-2xl font-bold text-gray-900">{{ user_lost_count|default:"0" }}</p>
-                        <p class="text-xs text-muted mt-1">Lost Reports</p>
+                        <p class="text-xs text-black mt-1">Lost Reports</p>
                     </div>
                     <div class="glass-card rounded-xl p-5 text-center">
                         <p class="text-2xl font-bold text-gray-900">{{ user_found_count|default:"0" }}</p>
-                        <p class="text-xs text-muted mt-1">Found Reports</p>
+                        <p class="text-xs text-black mt-1">Found Reports</p>
                     </div>
                     <div class="glass-card rounded-xl p-5 text-center">
                         <p class="text-2xl font-bold text-success">{{ user_claims_count|default:"0" }}</p>
-                        <p class="text-xs text-muted mt-1">Claims Made</p>
+                        <p class="text-xs text-black mt-1">Claims Made</p>
                     </div>
                 </div>
 
@@ -48,25 +48,25 @@
                     <div class="space-y-4">
                         <div class="flex items-center justify-between py-3 border-b border-dark-700">
                             <div>
-                                <p class="text-sm text-muted">Username</p>
+                                <p class="text-sm text-black">Username</p>
                                 <p class="text-gray-900 text-sm font-medium">{{ user.username }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-3 border-b border-dark-700">
                             <div>
-                                <p class="text-sm text-muted">Email</p>
+                                <p class="text-sm text-black">Email</p>
                                 <p class="text-gray-900 text-sm font-medium">{{ user.email|default:"Not set" }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-3 border-b border-dark-700">
                             <div>
-                                <p class="text-sm text-muted">Full Name</p>
+                                <p class="text-sm text-black">Full Name</p>
                                 <p class="text-gray-900 text-sm font-medium">{{ user.get_full_name|default:"Not set" }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-3">
                             <div>
-                                <p class="text-sm text-muted">Last Login</p>
+                                <p class="text-sm text-black">Last Login</p>
                                 <p class="text-gray-900 text-sm font-medium">{{ user.last_login|date:"M d, Y H:i"|default:"Never" }}</p>
                             </div>
                         </div>
@@ -85,14 +85,14 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm text-gray-900 truncate">{{ item.item_name }}</p>
-                                    <p class="text-xs text-muted">{{ item.created_at|date:"M d, Y" }}</p>
+                                    <p class="text-xs text-black">{{ item.created_at|date:"M d, Y" }}</p>
                                 </div>
                                 <span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">{{ item.status }}</span>
                             </div>
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p class="text-muted text-sm text-center py-8">No reports yet. Start by creating one!</p>
+                        <p class="text-black text-sm text-center py-8">No reports yet. Start by creating one!</p>
                     {% endif %}
                 </div>
             </div>

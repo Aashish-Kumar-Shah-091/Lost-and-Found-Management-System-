@@ -15,7 +15,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <h1 class="text-2xl font-bold text-gray-900">Welcome back, {{ user.username }}</h1>
-                        <p class="text-muted text-sm mt-1">Here's an overview of your activity</p>
+                        <p class="text-black text-sm mt-1">Here's an overview of your activity</p>
                     </div>
                     <div class="flex gap-3 mt-4 sm:mt-0">
                         <a href="{% url 'create_lost_item' %}" class="btn-primary px-4 py-2 rounded-xl text-xs font-medium text-gray-900 inline-flex items-center space-x-1.5">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <p class="text-2xl font-bold text-gray-900">{{ user_lost_count }}</p>
-                        <p class="text-xs text-muted mt-1">Lost Reports</p>
+                        <p class="text-xs text-black mt-1">Lost Reports</p>
                     </div>
 
                     <div class="glass-card rounded-xl p-5 card-hover">
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <p class="text-2xl font-bold text-gray-900">{{ user_found_count }}</p>
-                        <p class="text-xs text-muted mt-1">Found Reports</p>
+                        <p class="text-xs text-black mt-1">Found Reports</p>
                     </div>
 
                     <div class="glass-card rounded-xl p-5 card-hover">
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <p class="text-2xl font-bold text-gray-900">{{ matches_count }}</p>
-                        <p class="text-xs text-muted mt-1">Matches</p>
+                        <p class="text-xs text-black mt-1">Matches</p>
                     </div>
 
                     <div class="glass-card rounded-xl p-5 card-hover">
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <p class="text-2xl font-bold text-gray-900">{{ notifications_count }}</p>
-                        <p class="text-xs text-muted mt-1">Pending Claims</p>
+                        <p class="text-xs text-black mt-1">Pending Claims</p>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm text-gray-900 truncate">{{ item.item_name }}</p>
-                                    <p class="text-xs text-muted">{{ item.lost_location }}</p>
+                                    <p class="text-xs text-black">{{ item.lost_location }}</p>
                                 </div>
                                 <span class="text-xs px-2 py-1 rounded-full
                                     {% if item.status == 'Lost' %}bg-red-500/10 text-red-400{% else %}bg-success/10 text-success{% endif %}">
@@ -104,7 +104,7 @@
                         </div>
                         {% else %}
                         <div class="text-center py-8">
-                            <p class="text-muted text-sm">No lost reports yet</p>
+                            <p class="text-black text-sm">No lost reports yet</p>
                         </div>
                         {% endif %}
                     </div>
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm text-gray-900 truncate">{{ item.item_name }}</p>
-                                    <p class="text-xs text-muted">{{ item.found_location }}</p>
+                                    <p class="text-xs text-black">{{ item.found_location }}</p>
                                 </div>
                                 <span class="text-xs px-2 py-1 rounded-full
                                     {% if item.status == 'Found' %}bg-success/10 text-success{% else %}bg-accent/10 text-accent{% endif %}">
@@ -139,7 +139,7 @@
                         </div>
                         {% else %}
                         <div class="text-center py-8">
-                            <p class="text-muted text-sm">No found reports yet</p>
+                            <p class="text-black text-sm">No found reports yet</p>
                         </div>
                         {% endif %}
                     </div>
@@ -160,7 +160,7 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm text-gray-900 truncate">Claim #{{ claim.pk }}</p>
-                                <p class="text-xs text-muted">{{ claim.created_at|date:"M d, Y" }}</p>
+                                <p class="text-xs text-black">{{ claim.created_at|date:"M d, Y" }}</p>
                             </div>
                             <span class="text-xs px-2 py-1 rounded-full
                                 {% if claim.status == 'Pending' %}bg-yellow-500/10 text-yellow-400
@@ -173,7 +173,7 @@
                     </div>
                     {% else %}
                     <div class="text-center py-8">
-                        <p class="text-muted text-sm">No claims yet</p>
+                        <p class="text-black text-sm">No claims yet</p>
                     </div>
                     {% endif %}
                 </div>

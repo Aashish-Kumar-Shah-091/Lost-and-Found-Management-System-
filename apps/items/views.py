@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import Http404
 from .models import LostItem, FoundItem
 
 
@@ -58,6 +59,18 @@ def lost_item_detail(request, pk):
     return render(request, 'items/lost_item_detail.html', {'item': item})
 
 
+@login_required
+def delete_lost_item(request, pk):
+    item = get_object_or_404(LostItem, id=pk)
+    if item.user != request.user:
+        raise Http404
+    if request.method == 'POST':
+        item.delete()
+        messages.success(request, 'Lost item deleted successfully.')
+        return redirect('lost_item_list')
+    return redirect('lost_item_detail', pk=pk)
+
+
 def found_item_list(request):
     items = FoundItem.objects.all().order_by('-created_at')
 
@@ -107,3 +120,15 @@ def create_found_item(request):
 def found_item_detail(request, pk):
     item = get_object_or_404(FoundItem, id=pk)
     return render(request, 'items/found_item_detail.html', {'item': item})
+
+
+@login_required
+def delete_found_item(request, pk):
+    item = get_object_or_404(FoundItem, id=pk)
+    if item.user != request.user:
+        raise Http404
+    if request.method == 'POST':
+        item.delete()
+        messages.success(request, 'Found item deleted successfully.')
+        return redirect('found_item_list')
+    return redirect('found_item_detail', pk=pk)

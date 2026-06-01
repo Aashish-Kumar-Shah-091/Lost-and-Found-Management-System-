@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
+from django.http import Http404
 
 from apps.items.models import LostItem, FoundItem
 from .models import Claim
@@ -44,4 +45,66 @@ def create_claim(request, kind, item_id):
 
 def claim_detail(request, pk):
     claim = get_object_or_404(Claim, id=pk)
-    return render(request, 'claims/claim_detail.html', {'claim': claim})
+
+    item = None
+    if claim.content_type and claim.object_id:
+        model_class = claim.content_type.model_class()
+        if model_class:
+            item = model_class.objects.filter(id=claim.object_id).first()
+
+    is_item_owner = item and request.user.is_authenticated and item.user == request.user
+
+    return render(request, 'claims/claim_detail.html', {
+        'claim': claim,
+        'item': item,
+        'is_item_owner': is_item_owner,
+    })
+
+
+@login_required
+def approve_claim(request, pk):
+    claim = get_object_or_404(Claim, id=pk)
+
+    item = None
+    if claim.content_type and claim.object_id:
+        model_class = claim.content_type.model_class()
+        if model_class:
+            item = model_class.objects.filter(id=claim.object_id).first()
+
+    if not item or item.user != request.user:
+        raise Http404
+
+    if request.method == 'POST':
+        claim.status = 'Approved'
+        claim.save()
+
+        if hasattr(item, 'status'):
+            item.status = 'Recovered' if isinstance(item, LostItem) else 'Returned'
+            item.save()
+
+        messages.success(request, f'Claim #{claim.pk} has been approved!')
+        return redirect('claim_detail', pk=claim.pk)
+
+    return redirect('claim_detail', pk=claim.pk)
+
+
+@login_required
+def reject_claim(request, pk):
+    claim = get_object_or_404(Claim, id=pk)
+
+    item = None
+    if claim.content_type and claim.object_id:
+        model_class = claim.content_type.model_class()
+        if model_class:
+            item = model_class.objects.filter(id=claim.object_id).first()
+
+    if not item or item.user != request.user:
+        raise Http404
+
+    if request.method == 'POST':
+        claim.status = 'Rejected'
+        claim.save()
+        messages.success(request, f'Claim #{claim.pk} has been rejected.')
+        return redirect('claim_detail', pk=claim.pk)
+
+    return redirect('claim_detail', pk=claim.pk)
